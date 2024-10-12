@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "qwe"
+      POSTGRES_DBNAME: "ativia-db"
+    ports:
+      - "5444:5432"
+    # volumes:
+    #   - ./conv_data:/var/
+    networks:
+      - network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "andre@ativia.com"
+      PGADMIN_DEFAULT_PASSWORD: "qwe"
+    ports:
+      - "6543:80"
+    depends_on: 
+      - postgres
+    networks:
+      - network
+
+volumes:
+  data:
+
+networks:
+  network:
+    driver: bridge
