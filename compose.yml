@@ -6,11 +6,14 @@ services:
     environment:
       POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "qwe"
-      POSTGRES_DBNAME: "ativia-db"
+      POSTGRES_DB: "ativiadb"
     ports:
       - "5444:5432"
-    # volumes:
-    #   - ./conv_data:/var/
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d  # Place .sql scripts here for initialization
+      - ./csv:/csv  # Mount .csv directory for loading files at runtime
+  
     networks:
       - network
 
@@ -27,7 +30,7 @@ services:
       - network
 
 volumes:
-  data:
+  postgres_data:
 
 networks:
   network:
